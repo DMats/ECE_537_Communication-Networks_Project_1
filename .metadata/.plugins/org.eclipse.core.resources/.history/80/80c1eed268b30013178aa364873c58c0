@@ -26,7 +26,7 @@ final class HandleHttpRequest implements Runnable {
 		// Get the request line of the HTTP request message.
         // Extract the filename from the request line.
 		// Hint: use java  StringTokenizer class; becareful about the file
-		// directory
+		// directory.
 	
 	
 
