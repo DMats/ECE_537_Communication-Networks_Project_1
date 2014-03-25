@@ -25,6 +25,9 @@ final class HandleHttpRequest implements Runnable {
 
     private void processRequest() throws Exception {
     	
+    	System.out.println();
+    	System.out.println("Parsing HTTP Request...");
+    	
     	// Create Stream Reader/Writers
     	BufferedReader inFromClient = 
     			new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
@@ -34,22 +37,35 @@ final class HandleHttpRequest implements Runnable {
 		// Get the request line of the HTTP request message.    	
     	String currString;
     	ArrayList<String> HTTPStrings = new ArrayList<String>();
-    	while((currString = inFromClient.readLine()) != null)
+    	while(!(currString = inFromClient.readLine()).equals(""))
     	{
     		HTTPStrings.add(currString);	
     	}
     	
     	// Print out the HTTP request
+    	System.out.println();
+    	System.out.println("---------Received Request---------");
     	for (String s : HTTPStrings)
     	{
     		System.out.println(s);
     	}
+    	System.out.println("----------------------------------");
 
     	
         // Extract the filename from the request line. 
 		// Hint: use java  StringTokenizer class; be careful about the file
 		// directory.    	
     	String[] requestLine = HTTPStrings.get(0).split("\\s");
+    	
+    	System.out.println();
+    	System.out.println("---------Tokenized Request Line---------");
+    	for(String s : requestLine)
+    	{
+    		System.out.println(s);
+    	}
+    	System.out.println("----------------------------------------");
+    	
+    	System.out.println();
     	if (requestLine[0].equals("GET"))
     	{
     		System.out.println("This is a GET request.");
@@ -58,6 +74,12 @@ final class HandleHttpRequest implements Runnable {
     	{
     		System.out.println("ERROR:  This is not a GET request.");
     	}
+    	
+    	System.out.println();
+    	System.out.println("Finished parsing HTTP request.");
+    	
+    	System.out.println();
+    	System.out.println("Formatting HTTP Response...");
     	
     	// Prepare File object for existence check, and path string for 
     	// private contentType method
@@ -72,7 +94,7 @@ final class HandleHttpRequest implements Runnable {
 		// Construct the header part of the response message.
         String statusLine = null;
         String contentTypeLine = null;
-        String entityBody = null;
+        String entityBody = "DEBUG MESSAGE: The entityBody variable was not used.";
     	if(f.exists() && !f.isDirectory()) { // Check if request file exists locally
 		    statusLine = "HTTP/1.0 200 OK" + CRLF;
 		    contentTypeLine = "Content-Type: " + 
@@ -84,14 +106,25 @@ final class HandleHttpRequest implements Runnable {
 			"<HEAD><TITLE>Not Found</TITLE></HEAD>" +
 			"<BODY>Not Found</BODY></HTML>";
         }
+    	
+    	System.out.println();
+    	System.out.println("---------HTTP Response---------");
+    	System.out.print(statusLine);
+    	System.out.print(contentTypeLine);
+    	System.out.println(entityBody);
+    	System.out.println("-------------------------------");
+    	
+    	System.out.println();
+    	System.out.println("Finished formatting HTTP response.");
+    	
+    	System.out.println();
+    	System.out.println("Sending HTTP response...");
 		 
 
         // Insert your own code here to:
     	// Send the status line, content type line, and a blank line to
     	// indicate the end of the header lines.  Then, Send the entity body
     	// and close socket.
-    	
-    	System.out.println("Didnt Fail Yet.");
     	
     	outToClient.writeBytes(statusLine);
     	outToClient.writeBytes(contentTypeLine);
@@ -107,6 +140,9 @@ final class HandleHttpRequest implements Runnable {
     	{
     		outToClient.writeBytes(entityBody);
     	}
+    	
+    	System.out.println();
+    	System.out.println("Finished sending HTTP response.");
     	
     	inFromClient.close();
     	outToClient.close();
