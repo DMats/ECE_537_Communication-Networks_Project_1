@@ -75,8 +75,7 @@ public class Main {
 				count++;
 				if (p instanceof TCPPacket)
 				{
-					output = count + "\t" +
-							"TCP\t" + 
+					output = count + " TCP\t" + 
 							((TCPPacket)p).timestamp + "\t" + 
 							((TCPPacket)p).data.length + "\n";
 					bw.write(output);

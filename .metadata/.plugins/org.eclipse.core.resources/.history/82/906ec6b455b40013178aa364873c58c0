@@ -75,10 +75,9 @@ public class Main {
 				count++;
 				if (p instanceof TCPPacket)
 				{
-					output = count + "\t" +
-							"TCP\t" + 
+					output = count + " TCP\t" + 
 							((TCPPacket)p).timestamp + "\t" + 
-							((TCPPacket)p).data.length + "\n";
+							((TCPPacket)p).data.length + "\t";
 					bw.write(output);
 				}
 				else if (p instanceof UDPPacket)
@@ -95,7 +94,6 @@ public class Main {
 				}
 
 			}
-			bw.flush();
 			bw.close();
 			
 			System.out.println("Done");

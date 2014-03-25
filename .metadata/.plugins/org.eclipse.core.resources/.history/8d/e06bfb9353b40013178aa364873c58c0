@@ -68,22 +68,15 @@ public class Main {
 			FileWriter fw = new FileWriter(file.getAbsoluteFile());
 			BufferedWriter bw = new BufferedWriter(fw);
 
-			int count = 0;
-			String output;
 			for(Packet p : overallPacketArray)
 			{
-				count++;
 				if (p instanceof TCPPacket)
 				{
-					output = count + "\t" +
-							"TCP\t" + 
-							((TCPPacket)p).timestamp + "\t" + 
-							((TCPPacket)p).data.length + "\n";
-					bw.write(output);
+					bw.write(((TCPPacket)p).timestamp + " " + ((TCPPacket)p).data.length);
 				}
 				else if (p instanceof UDPPacket)
 				{
-					//bw.write(((UDPPacket)p).timestamp + " " + ((UDPPacket)p).data.length);
+					bw.write(((UDPPacket)p).timestamp + " " + ((UDPPacket)p).data.length);
 				}
 				else if (p instanceof IPPacket)
 				{
@@ -95,7 +88,6 @@ public class Main {
 				}
 
 			}
-			bw.flush();
 			bw.close();
 			
 			System.out.println("Done");
@@ -114,7 +106,6 @@ public class Main {
 		pp.openFile("/Users/David/Desktop/ECE_537_Communication-Networks_Project_1/simpleparser/VoIP.pcap");
 		parsePcapFile(pp, "VoIP");
 		pp.closeFile();
-		
 	}
 
 }

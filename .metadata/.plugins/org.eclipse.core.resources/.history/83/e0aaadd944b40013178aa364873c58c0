@@ -1,0 +1,28 @@
+/**
+ * 
+ */
+package edu.wisc.simpleparser;
+
+/**
+ * @author David
+ *
+ */
+public class Main {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		PcapParser pp = new PcapParser();
+		pp.openFile("/Users/David/Desktop/ECE_537_Communication-Networks_Project_1/simpleparser/BitTorrent.pcap");
+		Packet packet = pp.getPacket();
+		if (packet.getClass().equals("TCPPacket"))
+			{
+				System.out.println("TCPPacket");
+			}
+		
+		System.out.println("Maybe it didn't work.");
+	}
+
+}

@@ -1,0 +1,37 @@
+/**
+ * 
+ */
+package edu.wisc.simpleparser;
+
+import java.util.ArrayList;
+
+
+/**
+ * @author David
+ *
+ */
+public class Main {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		PcapParser pp = new PcapParser();
+		pp.openFile("/Users/David/Desktop/ECE_537_Communication-Networks_Project_1/simpleparser/BitTorrent.pcap");
+		ArrayList <TCPPacket> tcpPacketArray = new <TCPPacket>ArrayList();
+		TCPPacket tcpPacket;
+		while((tcpPacket = (TCPPacket) pp.getPacket()) != Packet.EOF)
+		{
+			tcpPacketArray.add(tcpPacket);
+		}
+		
+		for(TCPPacket p : tcpPacketArray)
+		{
+			System.out.println(p.timestamp);
+		}			
+		
+		System.out.println("Maybe it didn't work.");
+	}
+
+}

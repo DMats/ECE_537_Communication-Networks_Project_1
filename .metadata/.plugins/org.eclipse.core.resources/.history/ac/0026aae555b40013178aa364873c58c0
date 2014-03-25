@@ -75,7 +75,7 @@ public class Main {
 				count++;
 				if (p instanceof TCPPacket)
 				{
-					output = count + "\t" +
+					output = count "\t" +
 							"TCP\t" + 
 							((TCPPacket)p).timestamp + "\t" + 
 							((TCPPacket)p).data.length + "\n";

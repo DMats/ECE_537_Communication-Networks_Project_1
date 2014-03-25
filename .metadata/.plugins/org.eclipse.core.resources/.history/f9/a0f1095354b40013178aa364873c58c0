@@ -69,21 +69,16 @@ public class Main {
 			BufferedWriter bw = new BufferedWriter(fw);
 
 			int count = 0;
-			String output;
 			for(Packet p : overallPacketArray)
 			{
 				count++;
 				if (p instanceof TCPPacket)
 				{
-					output = count + "\t" +
-							"TCP\t" + 
-							((TCPPacket)p).timestamp + "\t" + 
-							((TCPPacket)p).data.length + "\n";
-					bw.write(output);
+					bw.write("Packet " + count + ": " + ((TCPPacket)p).timestamp + "\n" + ((TCPPacket)p).data.length);
 				}
 				else if (p instanceof UDPPacket)
 				{
-					//bw.write(((UDPPacket)p).timestamp + " " + ((UDPPacket)p).data.length);
+					bw.write(((UDPPacket)p).timestamp + " " + ((UDPPacket)p).data.length);
 				}
 				else if (p instanceof IPPacket)
 				{
@@ -95,7 +90,6 @@ public class Main {
 				}
 
 			}
-			bw.flush();
 			bw.close();
 			
 			System.out.println("Done");

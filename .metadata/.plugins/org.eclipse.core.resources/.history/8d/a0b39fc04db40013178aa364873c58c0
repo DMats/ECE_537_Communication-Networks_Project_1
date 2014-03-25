@@ -1,0 +1,55 @@
+/**
+ * 
+ */
+package edu.wisc.simpleparser;
+
+import java.util.ArrayList;
+
+
+/**
+ * @author David
+ *
+ */
+public class Main {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		PcapParser pp = new PcapParser();
+		pp.openFile("/Users/David/Desktop/ECE_537_Communication-Networks_Project_1/simpleparser/BitTorrent.pcap");
+		ArrayList <TCPPacket> tcpPacketArray = new ArrayList<TCPPacket>();
+		ArrayList <UDPPacket> udpPacketArray = new ArrayList<UDPPacket>();
+		ArrayList <IPPacket> ipPacketArray = new ArrayList<IPPacket>();
+		Packet packet;
+		
+		while((packet = pp.getPacket()) != Packet.EOF)
+		{
+			if (packet instanceof TCPPacket)
+			{
+				tcpPacketArray.add((TCPPacket) packet);
+			}
+			else if (packet instanceof UDPPacket)
+			{
+				udpPacketArray.add((UDPPacket) packet);
+			}
+			else if (packet instanceof IPPacket)
+			{
+				ipPacketArray.add((IPPacket) packet);
+			}
+			else
+			{
+				System.out.println("Error:  Unknown packet type.");
+			}
+		}
+		
+		for(TCPPacket p : tcpPacketArray)
+		{
+			System.out.println(p.timestamp);
+		}			
+		
+		System.out.println("Maybe it didn't work.");
+	}
+
+}
