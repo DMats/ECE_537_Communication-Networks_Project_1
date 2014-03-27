@@ -1,0 +1,105 @@
+clear
+clc
+
+formatSpec = '%d %c %*c %*c %ld %d'; 
+size = [4 Inf];
+
+filename = 'BitTorrent_Output.txt';
+fid = fopen(filename);
+BitTorrent = fscanf(fid, formatSpec, size);
+fclose(fid);
+BitTorrent = BitTorrent';
+
+filename = 'FTP_Output.txt';
+fid = fopen(filename);
+FTP = fscanf(fid, formatSpec, size);
+fclose(fid);
+FTP = FTP';
+
+filename = 'HTTP_Facebook_Output.txt';
+fid = fopen(filename);
+HTTP = fscanf(fid, formatSpec, size);
+fclose(fid);
+HTTP = HTTP';
+
+filename = 'VoIP_Output.txt';
+fid = fopen(filename);
+VoIP = fscanf(fid, formatSpec, size);
+fclose(fid);
+VoIP = VoIP';
+
+cdfx = 'Payload Size';
+cdfy = 'F(Payload Size)';
+
+pdfx = 'Payload Size';
+pdfy = 'f(Payload Size)';
+
+fcnt = 0;
+
+% CDF Plots
+fcnt = fcnt + 1;
+fig = figure(fcnt);
+cdfplot(BitTorrent(:,4));
+title('BitTorrent CDF');
+xlabel(cdfx);
+ylabel(cdfy);
+saveas(fig, 'BitTorrent_CDF.pdf');
+close
+
+fcnt = fcnt + 1;
+fig = figure(fcnt);
+cdfplot(FTP(:,4));
+title('FTP CDF');
+xlabel(cdfx);
+ylabel(cdfy);
+saveas(fig, 'FTP_CDF.pdf');
+close
+
+fcnt = fcnt+1;
+fig = figure(fcnt);
+cdfplot(HTTP(:,4));
+title('HTTP CDF');
+xlabel(cdfx);
+ylabel(cdfy);
+saveas(fig, 'HTTP_CDF.pdf');
+close
+
+fcnt = fcnt + 1;
+fig = figure(fcnt);
+cdfplot(VoIP(:,4));
+title('VoIP CDF');
+xlabel(cdfx);
+ylabel(cdfy);
+saveas(fig, 'VoIP_CDF.pdf');
+close
+
+
+% PDF Plots
+sortedPayloads = sort(BitTorrent(:,4));
+mean = mean(sortedPayloads);
+std = std(sortedPayloads);
+fcnt = fcnt + 1;
+fig = figure(fcnt);
+pdf = normpdf(sortedPayloads, mean, std);
+plot(sortedPayloads, pdf);
+title('BitTorrent PDF');
+xlabel(pdfx);
+ylabel(pdfy);
+saveas(fig, 'BitTorrent_PDF.pdf');
+close
+
+sortedPayloads = sort(FTP(:,4));
+mean = mean(sortedPayloads);
+std = std(sortedPayloads);
+fcnt = fcnt + 1;
+fig = figure(fcnt);
+pdf = normpdf(sortedPayloads, mean, std);
+plot(sortedPayloads, pdf);
+title('FTP PDF');
+xlabel(pdfx);
+ylabel(pdfy);
+saveas(fig, 'FTP_PDF.pdf');
+close
+
+
+
